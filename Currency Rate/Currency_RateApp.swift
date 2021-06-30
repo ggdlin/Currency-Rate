@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct Currency_RateApp: App {
+    @StateObject private var viewModel = CurrencyRateViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView(viewModel: viewModel)
         }
     }
 }

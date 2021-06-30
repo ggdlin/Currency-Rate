@@ -7,15 +7,20 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
+    @ObservedObject var viewModel: CurrencyRateViewModel
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+      
+            Text("Test")
+            .onAppear {
+                viewModel.updateList()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView(viewModel: CurrencyRateViewModel())
     }
 }
