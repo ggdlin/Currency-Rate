@@ -17,8 +17,9 @@ struct MainView: View {
                 .tabItem { Label("Конвертер", systemImage: "arrow.triangle.2.circlepath") }
             CurrencyListView(valutesData: viewModel.valutesData)
                 .tabItem { Label("Курсы валют", systemImage: "rublesign.square") }
-            Text("settings")
-                .tabItem { Label("Настройки", systemImage: "gearshape") }
+            // TODO: -  Реализовать экран настроек
+//            Text("settings")
+//                .tabItem { Label("Настройки", systemImage: "gearshape") }
         }
         .tabViewStyle(DefaultTabViewStyle() )
         .onAppear {
