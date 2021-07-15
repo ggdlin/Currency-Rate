@@ -34,6 +34,7 @@ class NetworkManager {
             let currencyRate = try JSONDecoder().decode(CurrencyRate.self, from: currencyData)
             print("раскодирование удалось: \(currencyRate)")
             return currencyRate
+            
         } catch let error {
             print("не смог раскодировать полученные данные: \(error)")
             return CurrencyRate.gag

@@ -10,21 +10,19 @@ import SwiftUI
 struct CalculatorView: View {
     @ObservedObject var viewModel: CurrencyRateViewModel
     
-    
-    
     var body: some View {
         VStack {
             HStack {
                 Text("Данные актуальны на: \(viewModel.actualDate)")
                     .multilineTextAlignment(.leading)
                     .font(.subheadline)
+                // TODO: - data refetch button
 //                Spacer()
 //                Image(systemName: "arrow.clockwise")
             }
             .padding()
             
             Spacer()
-            
             
             CurrencyField(value: viewModel.valueForResultField,
                           valutesData: viewModel.currencyChoiceList,
@@ -33,12 +31,11 @@ struct CalculatorView: View {
                 .padding()
             HStack {
                 
-            
             Image(systemName: "arrow.up.arrow.down")
-                
                 .resizable()
                 .font(Font.title.weight(.ultraLight))
-                .frame(width: 50, height: 50)
+//                .frame(width: 50, height: 50)
+                .frame(minWidth: 20, idealWidth: 30, maxWidth: 50, minHeight: 20, idealHeight: 30, maxHeight: 50, alignment: .center)
                 .onTapGesture {
                     viewModel.swapValutes()
                 }
@@ -134,7 +131,7 @@ struct CalcButton: View {
                 
             }
             .foregroundColor(.blue)
-            .frame(width: 100, height: 100, alignment: .center)
+            .frame(minWidth: 60, idealWidth: 100, maxWidth: .infinity, minHeight: 60, idealHeight: 100, maxHeight: .infinity, alignment: .center)
             .onTapGesture { action(value) }
         
         
