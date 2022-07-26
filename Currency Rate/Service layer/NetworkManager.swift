@@ -13,34 +13,29 @@ class NetworkManager {
     let cacheDataKey = "cacheDataKey"
     let url = "https://www.cbr-xml-daily.ru/daily_json.js"
     
-    func fetchCurrencyRate() -> CurrencyRate {
+    func fetchCurrencyRate(_ closure: @escaping (CurrencyRate) -> Void ) {
         guard let url = URL(string: url) else {
-            return CurrencyRate.gag
-            
+            closure(CurrencyRate.gag)
+            return
         }
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 print("error fetch data: \(error)")
                 return
+            } else if let currencyData = data {
+                self.saveToCache(data: currencyData)
+                do {
+                    let currencyRate = try JSONDecoder().decode(CurrencyRate.self, from: currencyData)
+                    print("раскодирование удалось: \(currencyRate)")
+                    closure(currencyRate)
+                    
+                } catch let error {
+                    print("не смог раскодировать полученные данные: \(error)")
+                    closure(CurrencyRate.gag)
+                }
             }
-            guard let currencyData = data else { return }
-            self.saveToCache(data: currencyData)
         }.resume()
-        
-        guard let currencyData = loadDataFromCache() else { return CurrencyRate.gag }
-        
-        do {
-            let currencyRate = try JSONDecoder().decode(CurrencyRate.self, from: currencyData)
-            print("раскодирование удалось: \(currencyRate)")
-            return currencyRate
-            
-        } catch let error {
-            print("не смог раскодировать полученные данные: \(error)")
-            return CurrencyRate.gag
-        }
-        
-        
     }
     
     private func saveToCache(data: Data) {
@@ -52,7 +47,5 @@ class NetworkManager {
         return cacheData
     }
     
-    private init() {
-        
-    }
+    private init() {}
 }

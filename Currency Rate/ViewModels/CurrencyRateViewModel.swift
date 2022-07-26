@@ -65,7 +65,11 @@ class CurrencyRateViewModel: ObservableObject {
     }
     
     func updateList() {
-       currencyRate = NetworkManager.shared.fetchCurrencyRate()
+        NetworkManager.shared.fetchCurrencyRate { [weak self] data in
+            DispatchQueue.main.async {
+                self?.currencyRate = data
+            }
+        }
         outputValut = currencyRate.Valute["USD"] ?? ValuteData.rub
     }
     
